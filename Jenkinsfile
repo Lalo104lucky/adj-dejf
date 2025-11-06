@@ -15,12 +15,14 @@ pipeline {
         stage('Borrando imágenes antiguas') {
             steps {
                 bat '''
-                    IMAGES=$(docker images --filter "label=com.docker.compose.project=adj-demo" -q)
-                    if [ -n '$IMAGES']; then
-                        docker images rmi $IMAGES
-                    else
-                        echo 'No hay imágenes para borrar...'
-                    fi
+                    for /f "tokens=*" %%i in ('docker images --filter "label=com.docker.compose.project=demo" -q') do (
+                        docker rmi -f %%i
+                    )
+                    if errorlevel 1 (
+                        echo No hay imagenes por eliminar
+                    ) else (
+                        echo Imagenes eliminadas correctamente
+                    )
                 '''
             }
         }
