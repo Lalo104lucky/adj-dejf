@@ -6,7 +6,7 @@ pipeline {
         stage('Parando los servicios') {
             steps {
                 bat '''
-                    docker-compose -p adj-demo-c down || true
+                    docker-compose -p adj-demo down || true
                 '''
             }
         }
@@ -15,7 +15,7 @@ pipeline {
         stage('Borrando imágenes antiguas') {
             steps {
                 bat '''
-                    IMAGES=$(docker images --filter "label=com.docker.compose.project=adj-demo-c" -q)
+                    IMAGES=$(docker images --filter "label=com.docker.compose.project=adj-demo" -q)
                     if [ -n '$IMAGES']; then
                         docker images rmi $IMAGES
                     else
