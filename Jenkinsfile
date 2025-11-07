@@ -30,9 +30,7 @@ pipeline {
         // Bajar la actualización
         stage('Actualizando...') {
             steps {
-                bat '''
-                    checkout scm
-                '''
+                checkout scm
             }
         }
 
